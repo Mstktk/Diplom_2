@@ -41,12 +41,12 @@ class TestChangeUserData:
     @allure.title('Тест изменения почты пользователя на уже используемую')
     def test_change_user_email(self, login_and_return_data):
         access_token = login_and_return_data['accessToken']
-        payload = {'email': data.UserDataForChange.USER_EMAIL}
+        payload = {'email': data.UserData.USER_EMAIL}
         with allure.step('Изменение почты пользователя на уже используемую'):
             response = requests.patch(
                 f'{Curls.MAIN_URL}{Curls.URL_CHANGE_USER_DATA}',
                 json=payload,
                 headers=_bearer(access_token)
             )
-        assert response.status_code == 403
+        assert response.status_code == 403, f'Ожидали 403, получили {response.status_code}'
         assert response.json().get('message') == data.ResponseData.RESPONSE_ERROR_CHANGE_EMAIL['message']
