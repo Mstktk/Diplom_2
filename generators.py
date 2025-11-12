@@ -15,3 +15,4 @@ def generate_name():
 def generate_list_ingredients(list_size, list_ingredients):
     ingredients = random.sample(list_ingredients, list_size)
     return ingredients
+

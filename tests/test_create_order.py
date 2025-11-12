@@ -47,3 +47,4 @@ class TestCreateOrder:
         assert response.status_code == 400, f'Ожидали 400, получили {response.status_code}'
         assert response.json().get('message') == data.ResponseData.RESPONSE_INVALID_CREATE_ORDER['message']
 
+

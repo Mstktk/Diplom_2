@@ -50,3 +50,4 @@ class TestChangeUserData:
             )
         assert response.status_code == 403, f'Ожидали 403, получили {response.status_code}'
         assert response.json().get('message') == data.ResponseData.RESPONSE_ERROR_CHANGE_EMAIL['message']
+

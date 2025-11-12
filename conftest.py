@@ -78,3 +78,4 @@ def get_ingredients():
     resp.raise_for_status()
     body = resp.json()
     return [item['_id'] for item in body.get('data', [])]
+

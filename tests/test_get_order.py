@@ -23,3 +23,4 @@ class TestGetOrder:
             response = requests.get(f'{Curls.MAIN_URL}{Curls.URL_GET_USER_ORDERS}')
         assert response.status_code == 401
         assert response.json().get('message') == data.ResponseData.RESPONSE_ERROR_GET_ORDERS['message']
+
