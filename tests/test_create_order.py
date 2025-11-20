@@ -4,11 +4,7 @@ import requests
 import generators
 import data
 from curls import Curls
-
-def _bearer(token: str) -> dict:
-    if token.startswith('Bearer '):
-        token = token[len('Bearer '):]
-    return {'Authorization': f'Bearer {token}'}
+from helpers import _bearer
 
 class TestCreateOrder:
     @allure.title('Тест создания заказа с авторизацией')

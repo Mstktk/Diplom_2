@@ -17,20 +17,24 @@ class TestLogin:
         assert body.get('user', {}).get('email') == data.UserData.USER_EMAIL
         assert body.get('user', {}).get('name') == data.UserData.USER_NAME
 
-    @allure.title('Тест авторизации с неверными данными')
-    @pytest.mark.parametrize(
-        'email, password, invalid_data',
-        [
-            ['correct_email', generators.generate_email(), 'password'],
-            [generators.generate_password(), 'correct_password', 'email']
-        ]
-    )
-    def test_login_invalid_data(self, email, password, invalid_data):
+    @allure.title('Тест авторизации с неверным паролем')
+    def test_login_invalid_password(self):
         payload = {
-            'email': email if email != 'correct_email' else data.UserData.USER_EMAIL,
-            'password': password if password != 'correct_password' else data.UserData.USER_PASSWORD
+            'email': data.UserData.USER_EMAIL,
+            'password': generators.generate_password()
         }
-        with allure.step(f'Авторизация с неверным {invalid_data}'):
+        with allure.step('Авторизация с неверным паролем'):
+            response = requests.post(f'{Curls.MAIN_URL}{Curls.URL_LOGIN}', json=payload)  
+        assert response.status_code == 401
+        assert response.json().get('message') == data.ResponseData.RESPONSE_INVALID_LOGIN['message']
+
+    @allure.title('Тест авторизации с неверным email')
+    def test_login_invalid_email(self):
+        payload = {
+            'email': generators.generate_email(),
+            'password': data.UserData.USER_PASSWORD
+        }
+        with allure.step('Авторизация с неверным email'):
             response = requests.post(f'{Curls.MAIN_URL}{Curls.URL_LOGIN}', json=payload)  
         assert response.status_code == 401
         assert response.json().get('message') == data.ResponseData.RESPONSE_INVALID_LOGIN['message'] 
